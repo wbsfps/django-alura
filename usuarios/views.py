@@ -1,8 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
+from usuarios.forms import LoginForms
 
 
 def login(request):
-    return render(request, "usuarios/login.html")
+    form = LoginForms()
+
+    return render(request, "usuarios/login.html", {"form": form})
 
 
 def cadastro(request):
