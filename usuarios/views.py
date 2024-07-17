@@ -38,8 +38,8 @@ def cadastro(request):
         form = CadastroForms(request.POST)
 
         if form.is_valid():
-            messages.error(request, 'Senhas não são iguais')
             if form['senha'].value() != form['senha_confirmar'].value():
+                messages.error(request, 'Senhas não são iguais')
                 return redirect('cadastro')
 
             nome = form['nome_cadastro'].value()
