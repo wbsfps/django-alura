@@ -82,6 +82,16 @@ class CadastroForms(forms.Form):
             nome = nome.strip()
             if " " in nome:
                 raise forms.ValidationError(
-                    "Não é possível inserir espaços dentro do campo usuário")
+                    "Espaços não são permitidos nesse campo")
             else:
                 return nome
+
+    def clean_senha_confirmar(self):
+        senha = self.cleaned_data.get("senha")
+        senha_confirmar = self.cleaned_data.get("senha_confirmar")
+
+        if senha and senha_confirmar:
+            if senha != senha_confirmar:
+                raise forms.ValidationError("Senhas não são iguais")
+            else:
+                return senha_confirmar
