@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from galeria.models import Fotografia
+from apps.galeria.models import Fotografia
 from django.contrib import messages
 
 
@@ -12,12 +12,12 @@ def index(request):
     fotografias = Fotografia.objects.order_by("-data_fotografia").filter(
         publicada=True
     )
-    return render(request, 'index.html', {"cards": fotografias})
+    return render(request, 'galeria/index.html', {"cards": fotografias})
 
 
 def imagem(request, foto_id):
     fotografia = get_object_or_404(Fotografia, pk=foto_id)
-    return render(request, 'imagem.html', {"fotografia": fotografia})
+    return render(request, 'galeria/imagem.html', {"fotografia": fotografia})
 
 
 def buscar(request):
@@ -34,4 +34,4 @@ def buscar(request):
         if nome_a_buscar:
             fotografias = fotografias.filter(nome__icontains=nome_a_buscar)
 
-    return render(request, "buscar.html", {"cards": fotografias})
+    return render(request, "galeria/buscar.html", {"cards": fotografias})
