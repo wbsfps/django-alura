@@ -39,7 +39,20 @@ def buscar(request):
 
 
 def nova_imagem(request):
-    form = FotografiaForms()
+    if not request.user.is_authenticated:
+        messages.error(request, 'Você não está logado!')
+        return redirect('login')
+
+    form = FotografiaForms
+
+    if request.method == "POST":
+        form = FotografiaForms(request.POST)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Nova fotografia cadastrada')
+            return redirect('index')
+
     return render(request, "galeria/nova_imagem.html", {"form": form})
 
 
